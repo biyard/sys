@@ -7,6 +7,7 @@ use by_types::config::*;
 pub struct Config {
     pub env: &'static str,
     pub domain: &'static str,
+    pub auth: AuthConfig,
     pub aws: AwsConfig,
     pub database: DatabaseConfig,
     pub allowed_emails: HashSet<&'static str>,
@@ -17,6 +18,7 @@ impl Default for Config {
         Config {
             env: option_env!("ENV").expect("You must set ENV"),
             domain: option_env!("DOMAIN").expect("You must set DOMAIN"),
+            auth: AuthConfig::default(),
             aws: AwsConfig::default(),
             database: DatabaseConfig::default(),
             allowed_emails: option_env!("ALLOWED_EMAILS")

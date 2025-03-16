@@ -1,5 +1,8 @@
 use bdk::prelude::*;
-use by_axum::{auth::authorization_middleware, axum::middleware};
+use by_axum::{
+    auth::{authorization_middleware, set_auth_config},
+    axum::middleware,
+};
 use by_types::DatabaseConfig;
 use common::*;
 use sqlx::postgres::PgPoolOptions;
@@ -7,6 +10,7 @@ use tokio::net::TcpListener;
 
 mod controllers {
     pub mod m1;
+    pub mod v1;
 }
 
 pub mod config;
@@ -16,6 +20,7 @@ async fn main() -> Result<()> {
     let app = by_axum::new();
     let conf = config::get();
     tracing::debug!("config: {:?}", conf);
+    set_auth_config(conf.auth.clone());
 
     let _pool = if let DatabaseConfig::Postgres { url, pool_size } = conf.database {
         PgPoolOptions::new()
@@ -28,8 +33,8 @@ async fn main() -> Result<()> {
 
     let app = app
         .nest(
-            "/m1/users",
-            controllers::m1::users::UserController::new().route()?,
+            "/v1/users",
+            controllers::v1::users::UserController::new().route()?,
         )
         .layer(middleware::from_fn(authorization_middleware));
 
