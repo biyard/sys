@@ -12,21 +12,6 @@ jobs:
   test-erp:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,21 +27,14 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get install -y libgtk-3-dev
 
-      - name: Install PostgreSQL Client
-        run: sudo apt-get install -y postgresql-client
-
-      - name: Initialize Database SQL
-        run: |
-          psql postgresql://postgres:postgres@localhost:5432/test -f ./deps/rust-sdk/fixtures/sql/init.sql
-
       - name: test
         env:
           RUSTFLAGS: "-A warnings"
           DATABASE_TYPE: postgres
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
         run: |
-          echo "" > packages/main-ui/public/tailwind.css
-          echo "" > packages/main-ui/public/dep.js
+          echo "" > packages/erp/public/tailwind.css
+          echo "" > packages/erp/public/dep.js
           cd packages/erp && cargo test --tests --features web
 
   test-api:
