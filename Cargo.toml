@@ -12,7 +12,6 @@ license = "MIT"
 
 [workspace.dependencies]
 bdk = { path = "deps/rust-sdk/packages/bdk" }
-ratel-common = { package = "dto", path = "deps/ratel/packages/dto" }
 
 by-axum = { path = "deps/rust-sdk/packages/by-axum" }
 by-components = { path = "deps/rust-sdk/packages/by-components" }
