@@ -3,7 +3,6 @@ pub mod pages;
 pub mod route;
 
 use bdk::prelude::*;
-use dioxus_oauth::prelude::FirebaseService;
 use dioxus_popup::PopupService;
 use route::Route;
 
@@ -18,18 +17,6 @@ fn main() {
 
 fn app() -> Element {
     PopupService::init();
-    let firebase = &config::get().firebase;
-    let firebase = FirebaseService::new(
-        firebase.api_key.clone(),
-        firebase.auth_domain.clone(),
-        firebase.project_id.clone(),
-        firebase.storage_bucket.clone(),
-        firebase.messaging_sender_id.clone(),
-        firebase.app_id.clone(),
-        firebase.measurement_id.clone(),
-    );
-
-    use_context_provider(move || firebase);
 
     let css = include_str!("../public/input.css");
 

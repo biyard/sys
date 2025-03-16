@@ -25,10 +25,10 @@ setup.tool:
 	npm i -g webpack-cli
 
 run: clean public/tailwind.css public/dep.js
-	$(BUILD_ENV) dx serve --fullstack $(DXFLAGS)
+	@$(BUILD_ENV) dx serve --fullstack $(DXFLAGS)
 
 build: clean public/tailwind.css public/dep.js
-	$(BUILD_ENV) dx build --release --fullstack --server-features lambda
+	@$(BUILD_ENV) dx build --release --fullstack --server-features lambda
 	cp -r $(WORKSPACE_ROOT)/target/dx/$(SERVICE)/release/web $(ARTIFACT_DIR)
 
 	mv $(ARTIFACT_DIR)/server $(ARTIFACT_DIR)/bootstrap
