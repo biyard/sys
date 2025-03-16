@@ -1,0 +1,13 @@
+[package]
+name = "basic-api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+by-axum.workspace = true
+schemars = "0.8.21"
+serde = "1.0.217"
+tokio = { version = "1.41.1", features = ["full"] }
+
+[features]
+lambda = ["by-axum/lambda"]

@@ -1,0 +1,36 @@
+[package]
+name = "main-ui"
+version = "0.7.9"
+authors.workspace = true
+description.workspace = true
+edition.workspace = true
+repository.workspace = true
+
+[dependencies]
+common.workspace = true
+
+wasm-bindgen = { version = "0.2.100" }
+wasm-bindgen-futures = { version = "0.4.50" }
+web-sys = { version = "0.3.77" }
+
+tracing = { version = "0.1.40" }
+serde = "1.0.216"
+
+bdk = { workspace = true, features = ["fe"] }
+
+num-format = "0.4.4"
+
+dioxus-oauth.workspace = true
+google-wallet = { workspace = true }
+
+chrono = "0.4.39"
+base64 = "0.22.1"
+url = "2.5.4"
+wallet-adapter = "=1.0.4-beta"
+hex = "0.4.3"
+
+[features]
+default = []
+web = ["bdk/web"]
+server = ["bdk/server"]
+lambda = ["server", "bdk/lambda"]
