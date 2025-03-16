@@ -23,6 +23,7 @@ lazy_static = "1.5.0"
 regex = "1.11.1"
 
 bdk.workspace = true
+ratel-common.workspace = true
 sqlx = { workspace = true,  optional = true }
 
 [features]
