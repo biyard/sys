@@ -3,9 +3,7 @@ use by_axum::{
     auth::{authorization_middleware, set_auth_config},
     axum::middleware,
 };
-use by_types::DatabaseConfig;
 use common::*;
-use sqlx::postgres::PgPoolOptions;
 use tokio::net::TcpListener;
 
 mod controllers {
@@ -22,16 +20,8 @@ async fn main() -> Result<()> {
     tracing::debug!("config: {:?}", conf);
     set_auth_config(conf.auth.clone());
 
-    let _pool = if let DatabaseConfig::Postgres { url, pool_size } = conf.database {
-        PgPoolOptions::new()
-            .max_connections(pool_size)
-            .connect(url)
-            .await?
-    } else {
-        panic!("Database is not initialized. Call init() first.");
-    };
-
     let app = app
+        .nest("/m1", controllers::m1::route().await?)
         .nest(
             "/v1/users",
             controllers::v1::users::UserController::new().route()?,

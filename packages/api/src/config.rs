@@ -9,7 +9,7 @@ pub struct Config {
     pub domain: &'static str,
     pub auth: AuthConfig,
     pub aws: AwsConfig,
-    pub database: DatabaseConfig,
+    pub ratel_database: DatabaseConfig,
     pub allowed_emails: HashSet<&'static str>,
 }
 
@@ -20,7 +20,7 @@ impl Default for Config {
             domain: option_env!("DOMAIN").expect("You must set DOMAIN"),
             auth: AuthConfig::default(),
             aws: AwsConfig::default(),
-            database: DatabaseConfig::default(),
+            ratel_database: DatabaseConfig::default(),
             allowed_emails: option_env!("ALLOWED_EMAILS")
                 .unwrap_or("")
                 .split(',')
