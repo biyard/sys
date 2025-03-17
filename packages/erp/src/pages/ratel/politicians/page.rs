@@ -20,9 +20,7 @@ pub fn PoliticiansPage(lang: Language) -> Element {
                         button {
                             class: "px-20 py-10",
                             background: if Some(*stance) == ctrl.stance() { "var(--color-primary)" },
-                            onclick: move |_| {
-                                ctrl.stance.set(Some(stance.clone()));
-                            },
+                            onclick: move |_| ctrl.handle_select_stance(*stance),
                             {stance.translate(&lang)}
                         }
                     }

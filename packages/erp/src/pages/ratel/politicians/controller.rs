@@ -80,6 +80,14 @@ impl Controller {
         }
     }
 
+    pub fn handle_select_stance(&mut self, stance: CryptoStance) {
+        if Some(stance) == self.stance() {
+            self.stance.set(None);
+        } else {
+            self.stance.set(Some(stance));
+        }
+    }
+
     pub async fn handle_set_stance(&mut self, stance: CryptoStance) {
         tracing::debug!("Setting stance to {:?}", stance);
         let endpoint = config::get().main_api_endpoint;
