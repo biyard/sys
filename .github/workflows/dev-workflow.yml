@@ -148,6 +148,7 @@ jobs:
           FIREBASE_APP_ID: "${{ secrets.FIREBASE_APP_ID }}"
           FIREBASE_MEASUREMENT_ID: "${{ secrets.FIREBASE_MEASUREMENT_ID }}"
           MAIN_API_ENDPOINT: https://erp-api.dev.biyard.co
+          RATEL_API_ENDPOINT: https://api.dev.ratel.foundation
           ENV: dev
           SERVICE: erp
           DOMAIN: erp.dev.biyard.co
@@ -196,7 +197,7 @@ jobs:
           DOMAIN: api.dev.biyard.co
           AUTH_DOMAIN: dev.biyard.co
           DATABASE_TYPE: postgres
-          DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
+          RATEL_DATABASE_URL: ${{ secrets.DEV_RATEL_DATABASE_URL }}
           AUTH_SECRET_KEY: ${{ secrets.DEV_AUTH_SECRET_KEY }}
           JWT_SECRET_KEY: ${{ secrets.DEV_JWT_SECRET_KEY }}
           ENABLE_S3: false

@@ -2,7 +2,6 @@ ENV ?= dev
 BASE_DOMAIN ?= biyard.co
 DOMAIN ?= $(ENV).$(BASE_DOMAIN)
 
-HOSTED_ZONE_ID ?= $(shell aws route53 list-hosted-zones-by-name --dns-name ratel.foundation --query "HostedZones[0].Id" --output text | cut -d'/' -f3)
 PROJECT ?= $(shell basename `git rev-parse --show-toplevel`)
 SERVICE ?= main-ui
 COMMIT ?= $(shell git rev-parse --short HEAD)

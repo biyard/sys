@@ -22,4 +22,9 @@ translate! {
         ko: "입장",
         en: "Stance",
     },
+
+    btn_refresh: {
+        ko: "새로고침",
+        en: "Refresh",
+    },
 }

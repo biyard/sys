@@ -9,7 +9,8 @@ pub struct Config {
     pub domain: &'static str,
     pub auth: AuthConfig,
     pub aws: AwsConfig,
-    pub ratel_database: DatabaseConfig,
+    pub pool_size: u32,
+    pub ratel_database: &'static str,
     pub allowed_emails: HashSet<&'static str>,
 }
 
@@ -20,7 +21,12 @@ impl Default for Config {
             domain: option_env!("DOMAIN").expect("You must set DOMAIN"),
             auth: AuthConfig::default(),
             aws: AwsConfig::default(),
-            ratel_database: DatabaseConfig::default(),
+            pool_size: option_env!("POOL_SIZE")
+                .unwrap_or("10")
+                .parse()
+                .expect("POOL_SIZE must be a number"),
+            ratel_database: option_env!("RATEL_DATABASE_URL")
+                .expect("You must set RATEL_DATABASE_URL"),
             allowed_emails: option_env!("ALLOWED_EMAILS")
                 .unwrap_or("")
                 .split(',')

@@ -43,7 +43,7 @@ pub async fn authorize_organization(
 
     match auth {
         Authorization::Bearer { claims } => {
-            if claims.role != Role::Admin {
+            if claims.role != Role::User {
                 return Err(StatusCode::UNAUTHORIZED);
             }
         }

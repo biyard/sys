@@ -2,12 +2,18 @@ use bdk::prelude::*;
 use by_axum::{
     aide,
     auth::Authorization,
-    axum::{Extension, Json, extract::State, routing::post},
+    axum::{
+        Extension, Json,
+        extract::{Query, State},
+        routing::{get, post},
+    },
 };
+use by_types::QueryResponse;
 use common::*;
 use ratel::{
-    PoliticianStances, PoliticianStancesAction, PoliticianStancesChangeStancesRequest,
-    PoliticianStancesRepository, PoliticianStancesRepositoryUpdateRequest,
+    AssemblyMemberQuery, AssemblyMemberQueryActionType, AssemblyMemberSummary, PoliticianStances,
+    PoliticianStancesAction, PoliticianStancesChangeStancesRequest, PoliticianStancesRepository,
+    PoliticianStancesRepositoryUpdateRequest,
 };
 
 #[derive(
@@ -60,6 +66,7 @@ impl PoliticianController {
 
     pub fn route(&self) -> Result<by_axum::axum::Router> {
         Ok(by_axum::axum::Router::new()
+            .route("/", get(Self::get_politicians))
             .route("/stances", post(Self::act_politician))
             .with_state(self.clone()))
     }
@@ -76,5 +83,36 @@ impl PoliticianController {
                 Ok(Json(res))
             }
         }
+    }
+
+    pub async fn get_politicians(
+        State(ctrl): State<PoliticianController>,
+        Extension(_auth): Extension<Option<Authorization>>,
+        Query(body): Query<AssemblyMemberQuery>,
+    ) -> Result<Json<QueryResponse<AssemblyMemberSummary>>> {
+        tracing::debug!("act_politician {:?}", body);
+
+        let items = match body {
+            b if b.action == Some(AssemblyMemberQueryActionType::ListByStance) => {
+                AssemblyMemberSummary::query_builder()
+                    .stance_equals(b.stance.unwrap_or_default())
+                    .query()
+                    .map(AssemblyMemberSummary::from)
+                    .fetch_all(&ctrl.pool)
+                    .await?
+            }
+            _ => {
+                AssemblyMemberSummary::query_builder()
+                    .query()
+                    .map(AssemblyMemberSummary::from)
+                    .fetch_all(&ctrl.pool)
+                    .await?
+            }
+        };
+
+        Ok(Json(QueryResponse {
+            total_count: items.len() as i64,
+            items,
+        }))
     }
 }

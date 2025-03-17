@@ -21,7 +21,7 @@ pub struct AssemblyMemberChangeStance {
     pub stance: CryptoStance,
 }
 
-#[api_model(base = "/v1/assembly-members", table = assembly_members)]
+#[api_model(base = "/m1/ratel/politicians", table = assembly_members)]
 pub struct AssemblyMember {
     #[api_model(summary, primary_key)]
     pub id: i64,

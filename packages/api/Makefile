@@ -1,5 +1,5 @@
-PROJECT ?= ratel
-SERVICE ?= main-api
+PROJECT ?= sys
+SERVICE ?= api
 ENV ?= dev
 AUTH_DOMAIN ?= dev.ratel.foundation
 DOMAIN ?= $(ENV).$(BASE_DOMAIN)

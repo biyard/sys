@@ -36,7 +36,7 @@ impl Controller {
     pub async fn handle_google(&mut self) {
         let cred = self.firebase.sign_in_with_popup(vec![]).await;
 
-        let endpoint = config::get().ratel_api_endpoint;
+        let endpoint = config::get().main_api_endpoint;
         match User::get_client(endpoint).sign_in(cred.access_token).await {
             Ok(_) => {
                 self.nav.push(Route::PoliticiansPage { lang: self.lang });
