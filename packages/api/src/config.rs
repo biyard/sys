@@ -12,6 +12,7 @@ pub struct Config {
     pub pool_size: u32,
     pub ratel_database: &'static str,
     pub allowed_emails: HashSet<&'static str>,
+    pub github_api_base_url: &'static str,
 }
 
 impl Default for Config {
@@ -31,6 +32,7 @@ impl Default for Config {
                 .unwrap_or("")
                 .split(',')
                 .collect::<HashSet<&str>>(),
+            github_api_base_url: "https://api.github.com",
         }
     }
 }
