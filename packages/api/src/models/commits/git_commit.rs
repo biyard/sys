@@ -7,7 +7,7 @@ use by_types::QueryResponse;
 
 #[api_model(base = "/v1/commits", table = git_commits)]
 pub struct GitCommit {
-    #[api_model(primary_key, read_action = find_by_id)]
+    #[api_model(primary_key)]
     pub id: i64,
 
     #[api_model(auto = [insert])]
