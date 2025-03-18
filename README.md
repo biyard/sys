@@ -50,6 +50,7 @@ export ENABLE_RDS=true
 export ENABLE_LAMBDA=true
 export DOMAIN=api.dev.ratel.foundation
 export RDS_ADMIN_PASSWORD=""
-
-ENV=dev make deploy
+export JWT_SECRET_KEY="YOUR_JWT_SECRET"
+export ENV=dev
+export RATEL_DATABASE_URL="postgres://YOUR_USERNAME:YOUR_PASSWORD@YOUR_SERVER_OR_IP:5432/ratel_db"
 ```
