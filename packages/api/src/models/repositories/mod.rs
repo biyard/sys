@@ -1,3 +1,3 @@
-pub mod repositories;
+pub mod git_repositories;
 
-pub use repositories::*;
+pub use git_repositories::*;

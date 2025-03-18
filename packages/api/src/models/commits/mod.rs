@@ -1,3 +1,3 @@
-pub mod commits;
+pub mod git_commits;
 
-pub use commits::*;
+pub use git_commits::*;
