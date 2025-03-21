@@ -54,9 +54,9 @@ jobs:
           DATABASE_TYPE: postgres
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
         run: |
-          echo "" > packages/main-ui/public/tailwind.css
-          echo "" > packages/main-ui/public/dep.js
-          cd packages/main-ui && cargo test --tests
+          echo "" > packages/erp/public/tailwind.css
+          echo "" > packages/erp/public/dep.js
+          cd packages/erp && cargo test --tests
 
   test-with-server:
     runs-on: ubuntu-latest
@@ -109,9 +109,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           JWT_SECRET_KEY: ${{ secrets.DEV_JWT_SECRET }}
         run: |
-          cd packages/main-api  && cargo test --tests
+          cd packages/api  && cargo test --tests
 
-  main-ui:
+  erp-ui:
     runs-on: ubuntu-22.04
 
     steps:
@@ -136,7 +136,7 @@ jobs:
       - name: Checking violate
         env:
           REGION: ap-northeast-2
-          SERVICE: main-ui
+          SERVICE: erp
         run: |
           dx check -p $SERVICE
 
@@ -146,13 +146,13 @@ jobs:
           ACCESS_KEY_ID: ""
           SECRET_ACCESS_KEY: ""
           ENV: dev
-          SERVICE: main-ui
+          SERVICE: erp
           API_PREFIX: /api
         run: |
           npm i -g @tailwindcss/cli
           make build
 
-  main-api:
+  api:
     runs-on: ubuntu-22.04
 
     steps:
@@ -178,7 +178,7 @@ jobs:
           ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           ENV: dev
-          SERVICE: main-api
+          SERVICE: api
           DOMAIN: api.dev.ratel.foundation
         run: |
           make build

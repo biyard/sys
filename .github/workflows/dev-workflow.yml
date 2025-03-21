@@ -119,12 +119,12 @@ jobs:
           cargo binstall toml-cli --force
 
       - name: Cache builder
-        id: main-ui-build-cache
+        id: erp-build-cache
         uses: actions/cache@v3
         with:
-          key: main-ui-build-cache
+          key: erp-build-cache
           path: |
-            packages/main-ui/target
+            packages/erp/target
 
       - name: Checking violate
         env:
