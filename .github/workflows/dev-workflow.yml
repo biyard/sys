@@ -147,7 +147,7 @@ jobs:
           FIREBASE_MESSAGING_SENDER_ID: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}"
           FIREBASE_APP_ID: "${{ secrets.FIREBASE_APP_ID }}"
           FIREBASE_MEASUREMENT_ID: "${{ secrets.FIREBASE_MEASUREMENT_ID }}"
-          MAIN_API_ENDPOINT: https://erp-api.dev.biyard.co
+          MAIN_API_ENDPOINT: https://api.dev.biyard.co
           RATEL_API_ENDPOINT: https://api.dev.ratel.foundation
           ENV: dev
           SERVICE: erp
@@ -209,7 +209,7 @@ jobs:
   create-release-pr:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/dev'
-    needs: [erp,api]
+    needs: [erp, api]
     steps:
       - uses: actions/checkout@v3
         with:
