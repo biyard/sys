@@ -7,7 +7,7 @@ pub enum Route {
     #[nest("/:lang")]
         #[layout(RootLayout)]
 
-            #[route("/")] HomePage { lang: Language },
+            #[route("/ratel/politicians")] PoliticiansPage { lang: Language },
 
         #[end_layout]
 

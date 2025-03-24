@@ -1,4 +1,5 @@
-pub mod assembly_members;
+mod ratel;
+
 use bdk::prelude::*;
 
 use by_axum::{
@@ -10,21 +11,14 @@ use by_axum::{
         middleware::{self, Next},
     },
 };
-use dto::*;
+use by_types::Role;
+use common::*;
 use reqwest::StatusCode;
 
-#[derive(Clone, Debug)]
-pub struct MenaceController {}
-
-impl MenaceController {
-    pub fn route(pool: sqlx::Pool<sqlx::Postgres>) -> Result<by_axum::axum::Router> {
-        Ok(by_axum::axum::Router::new()
-            .nest(
-                "/assembly-members",
-                assembly_members::AssemblyMemberControllerM1::route(pool)?,
-            )
-            .layer(middleware::from_fn(authorize_organization)))
-    }
+pub async fn route() -> Result<by_axum::axum::Router> {
+    Ok(by_axum::axum::Router::new()
+        .nest("/ratel", ratel::route().await?)
+        .layer(middleware::from_fn(authorize_organization)))
 }
 
 pub async fn authorize_organization(
@@ -47,9 +41,19 @@ pub async fn authorize_organization(
 
     let auth = auth.clone().unwrap();
 
-    if auth != Authorization::SecretApiKey {
-        tracing::debug!("Authorization header is not Secret");
-        return Err(StatusCode::UNAUTHORIZED);
+    match auth {
+        Authorization::Bearer { claims } => {
+            if claims.role != Role::User {
+                return Err(StatusCode::UNAUTHORIZED);
+            }
+        }
+        Authorization::ServerKey => {
+            tracing::debug!("Authorization header is ServerKey");
+        }
+        _ => {
+            tracing::debug!("Authorization header is not Bearer");
+            return Err(StatusCode::UNAUTHORIZED);
+        }
     }
 
     return Ok(next.run(req).await);

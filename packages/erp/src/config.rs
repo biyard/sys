@@ -17,6 +17,7 @@ pub struct Config {
     pub env: &'static str,
     pub domain: &'static str,
     pub log_level: Level,
+    pub ratel_api_endpoint: &'static str,
     pub main_api_endpoint: &'static str,
     pub firebase: FirebaseConfig,
 }
@@ -35,6 +36,8 @@ impl Default for Config {
                 _ => Level::INFO,
             },
             main_api_endpoint: option_env!("MAIN_API_ENDPOINT")
+                .unwrap_or("https://api.dev.biyard.co"),
+            ratel_api_endpoint: option_env!("RATEL_API_ENDPOINT")
                 .unwrap_or("https://api.dev.ratel.foundation"),
             firebase: FirebaseConfig {
                 api_key: option_env!("FIREBASE_API_KEY")
