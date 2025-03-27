@@ -7,12 +7,13 @@ ACCESS_KEY_ID ?= $(shell aws configure get aws_access_key_id $(AWS_FLAG))
 SECRET_ACCESS_KEY ?= $(shell aws configure get aws_secret_access_key $(AWS_FLAG))
 REGION ?= $(shell aws configure get region)
 
-DOMAIN ?= dev.ratel.foundation
+DOMAIN ?= erp.dev.biyard.co
 RUST_LOG ?= debug
 REDIRECT_URI ?= http://localhost:3000
 WORKSPACE_ROOT ?= ../..
 ARTIFACT_DIR ?= $(WORKSPACE_ROOT)/.build/$(SERVICE)
-MAIN_API_ENDPOINT ?= https://api.dev.ratel.foundation
+MAIN_API_ENDPOINT ?= https://api.dev.biyard.co
+RATEL_API_ENDPOINT ?= https://api.dev.ratel.foundation
 RUSTFLAGS ?= -D warnings
 DXFLAGS ?=
 

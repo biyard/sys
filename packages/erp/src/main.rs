@@ -3,6 +3,7 @@ pub mod pages;
 pub mod route;
 
 use bdk::prelude::*;
+use dioxus_oauth::prelude::FirebaseProvider;
 use dioxus_popup::PopupService;
 use route::Route;
 
@@ -19,8 +20,18 @@ fn app() -> Element {
     PopupService::init();
 
     let css = include_str!("../public/input.css");
+    let conf = config::get();
 
     rsx! {
+        FirebaseProvider {
+            api_key: conf.firebase.api_key.clone(),
+            auth_domain: conf.firebase.auth_domain.clone(),
+            project_id: conf.firebase.project_id.clone(),
+            storage_bucket: conf.firebase.storage_bucket.clone(),
+            messaging_sender_id: conf.firebase.messaging_sender_id.clone(),
+            app_id: conf.firebase.app_id.clone(),
+            measurement_id: conf.firebase.measurement_id.clone(),
+        }
         document::Link {
             href: asset!("/public/logos/favicon-96x96.png"),
             r#type: "image/png",
@@ -45,17 +56,12 @@ fn app() -> Element {
             href: "https://fonts.gstatic.com",
             rel: "preconnect",
         }
-        document::Link {
-            href: "https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap",
-            rel: "stylesheet",
-        }
+        document::Style { href: "https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" }
         document::Style { href: asset!("/public/main.css") }
         document::Style { href: asset!("/public/tailwind.css") }
 
         document::Script { src: "https://unpkg.com/@tailwindcss/browser@4.0.12/dist/index.global.js" }
         document::Style { r#type: "text/tailwindcss", {css} }
-
-        document::Script { r#type: "module", src: asset!("/public/dep.js"), defer: true }
 
         Router::<Route> {}
     }
