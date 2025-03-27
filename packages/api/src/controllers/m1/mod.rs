@@ -1,4 +1,5 @@
 mod ratel;
+mod sys;
 
 use bdk::prelude::*;
 
@@ -18,6 +19,7 @@ use reqwest::StatusCode;
 pub async fn route() -> Result<by_axum::axum::Router> {
     Ok(by_axum::axum::Router::new()
         .nest("/ratel", ratel::route().await?)
+        .nest("/sys", sys::route().await?)
         .layer(middleware::from_fn(authorize_organization)))
 }
 
