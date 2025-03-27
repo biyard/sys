@@ -11,8 +11,14 @@ common = { workspace = true, features = ["server"] }
 serde.workspace = true
 serde_json.workspace = true
 slog.workspace = true
+# models = { workspace = true, features = ["server"] }
 
 bdk = { workspace = true, features = ["be"] }
+by-macros = { path = "../../deps/rust-sdk/packages/by-macros" }
+rest-api.workspace = true
+by-axum.workspace = true
+by-types.workspace = true
+sqlx.workspace = true
 
 tokio = { version = "1.40.0", features = ["full"] }
 tower = "0.5.1"
@@ -24,5 +30,9 @@ validator = "0.20.0"
 dioxus-oauth.workspace = true
 
 [features]
-default = []
+default = ["server"] 
+server = []
 lambda = ["bdk/lambda"]
+
+[dev-dependencies]
+rest-api.workspace = true
