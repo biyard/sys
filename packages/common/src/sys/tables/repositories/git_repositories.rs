@@ -14,6 +14,12 @@ pub struct GitRepository {
     #[api_model(action = create, action_by_id = update, query_action = search_by)]
     pub name: String,
     
-    #[api_model(unique)]
+    #[api_model(unique, action = create, action_by_id = update, query_action = search_by)]
     pub url: String,
+
+    #[api_model(action = create, action_by_id = update, query_action = search_by)]
+    pub owner: String,
+
+    #[api_model(action = create, action_by_id = update, query_action = search_by)]
+    pub user_id: i64,
 }

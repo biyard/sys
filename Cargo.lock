@@ -91,9 +91,6 @@ name = "api"
 version = "0.7.10"
 dependencies = [
  "bdk",
- "by-axum",
- "by-macros",
- "by-types",
  "chrono",
  "common",
  "dioxus-oauth",

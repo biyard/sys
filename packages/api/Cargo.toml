@@ -14,10 +14,7 @@ slog.workspace = true
 # models = { workspace = true, features = ["server"] }
 
 bdk = { workspace = true, features = ["be"] }
-by-macros = { path = "../../deps/rust-sdk/packages/by-macros" }
-rest-api.workspace = true
-by-axum.workspace = true
-by-types.workspace = true
+
 sqlx.workspace = true
 
 tokio = { version = "1.40.0", features = ["full"] }

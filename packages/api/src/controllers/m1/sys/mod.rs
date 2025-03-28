@@ -1,4 +1,7 @@
 mod users;
+// mod git_commits;
+mod git_repositories;
+
 
 use bdk::prelude::*;
 
@@ -20,15 +23,17 @@ pub async fn route() -> Result<by_axum::axum::Router> {
     let r = GitRepository::get_repository(pool.clone());
 
     u.create_this_table().await?;
-    c.create_this_table().await?;
     r.create_this_table().await?;
+    c.create_this_table().await?;
 
     u.create_table().await?;
-    c.create_table().await?;
     r.create_table().await?;
+    c.create_table().await?;
 
     Ok(by_axum::axum::Router::new().nest(
         "/user",
-        users::UserController::new(pool).route()?,
-    ))
+        users::UserController::new(pool.clone()).route()?,
+    )
+    .nest("/repository", git_repositories::GitRepositoryController::new(pool.clone()).route()?) 
+    )
 }
