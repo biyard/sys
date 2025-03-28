@@ -8,7 +8,7 @@ use tokio::net::TcpListener;
 
 mod controllers {
     pub mod m1;
-    pub mod v1;
+    // pub mod v1;
 }
 
 pub mod config;
@@ -22,14 +22,14 @@ async fn main() -> Result<()> {
 
     let app = app
         .nest("/m1", controllers::m1::route().await?)
-        .nest(
-            "/v1/users",
-            controllers::v1::users::UserController::new().route()?,
-        )
+        // .nest(
+        //     "/v1/users",
+        //     controllers::v1::users::UserController::new().route()?,
+        // )
         .layer(middleware::from_fn(authorization_middleware));
 
     let port = option_env!("PORT").unwrap_or("3000");
-    let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", port))
         .await
         .unwrap();
     tracing::info!("listening on {}", listener.local_addr().unwrap());

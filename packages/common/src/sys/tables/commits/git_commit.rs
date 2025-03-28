@@ -1,9 +1,4 @@
-use crate::Result;
-
-#[cfg(feature = "server")]
-use by_axum::aide;
-use by_macros::api_model;
-use by_types::QueryResponse;
+use bdk::prelude::*;
 
 #[api_model(base = "/v1/commits", table = git_commits)]
 pub struct GitCommit {

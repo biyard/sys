@@ -1,3 +1,4 @@
+use crate::config;
 use bdk::prelude::*;
 use by_axum::{
     aide,
@@ -5,12 +6,10 @@ use by_axum::{
     axum::{Extension, Json, extract::State, routing::post},
 };
 use by_types::{Claims, JsonWithHeaders, Role};
+use common::Result;
+use common::sys::tables::*;
 use common::*;
-use dto::*;
 use reqwest::Client;
-
-use crate::config;
-
 #[derive(
     Debug, Clone, serde::Deserialize, serde::Serialize, schemars::JsonSchema, aide::OperationIo,
 )]
@@ -19,7 +18,10 @@ pub struct UserPath {
 }
 
 #[derive(Clone, Debug)]
-pub struct UserController {}
+pub struct UserController {
+    pool: sqlx::Pool<sqlx::Postgres>,
+    repo: UserRepository,
+}
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 struct GoogleUserInfo {
@@ -31,7 +33,7 @@ impl UserController {
     async fn sign_in(
         &self,
         _auth: Option<Authorization>,
-        UserSignInRequest { id_token }: UserSignInRequest,
+        UserLoginRequest { id_token }: UserLoginRequest,
     ) -> Result<JsonWithHeaders<User>> {
         let client = Client::new();
         let response = client
@@ -49,11 +51,19 @@ impl UserController {
             return Err(Error::Unauthorized);
         }
 
-        let user = JsonWithHeaders::new(User {
-            email: response.email.clone(),
-            role: Role::User,
-        });
-        let mut claim = Claims::new(response.email, Role::User);
+        let user = match User::query_builder()
+            .email_equals(response.email.clone())
+            .query()
+            .map(User::from)
+            .fetch_optional(&self.pool)
+            .await?
+        {
+            Some(user) =>  user,
+            None => self.repo.insert(Role::User, response.email, None).await?,
+        };
+
+        let mut claim = Claims::new(user.email.clone(), user.role.clone());
+        let user = JsonWithHeaders::new(user);
 
         let token = generate_jwt(&mut claim).map_err(|e| {
             tracing::error!("Failed to generate JWT: {}", e);
@@ -65,8 +75,9 @@ impl UserController {
 }
 
 impl UserController {
-    pub fn new() -> Self {
-        Self {}
+    pub fn new(pool: sqlx::Pool<sqlx::Postgres>) -> Self {
+        let repo = User::get_repository(pool.clone());
+        Self { pool, repo }
     }
 
     pub fn route(&self) -> Result<by_axum::axum::Router> {
@@ -82,7 +93,8 @@ impl UserController {
     ) -> Result<JsonWithHeaders<User>> {
         tracing::debug!("act_user {:?}", body);
         let res = match body {
-            UserAction::SignIn(param) => ctrl.sign_in(auth, param).await?,
+            UserAction::Login(param) => ctrl.sign_in(auth, param).await?,
+            _ => unimplemented!(),
         };
 
         Ok(res)

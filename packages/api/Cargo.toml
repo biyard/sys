@@ -11,8 +11,11 @@ common = { workspace = true, features = ["server"] }
 serde.workspace = true
 serde_json.workspace = true
 slog.workspace = true
+# models = { workspace = true, features = ["server"] }
 
 bdk = { workspace = true, features = ["be"] }
+
+sqlx.workspace = true
 
 tokio = { version = "1.40.0", features = ["full"] }
 tower = "0.5.1"
@@ -24,5 +27,9 @@ validator = "0.20.0"
 dioxus-oauth.workspace = true
 
 [features]
-default = []
+default = ["server"] 
+server = []
 lambda = ["bdk/lambda"]
+
+[dev-dependencies]
+rest-api.workspace = true

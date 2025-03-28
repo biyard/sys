@@ -11,7 +11,9 @@ pub struct Config {
     pub aws: AwsConfig,
     pub pool_size: u32,
     pub ratel_database: &'static str,
+    pub sys_database: &'static str,
     pub allowed_emails: HashSet<&'static str>,
+    pub github_api_base_url: &'static str,
 }
 
 impl Default for Config {
@@ -27,10 +29,13 @@ impl Default for Config {
                 .expect("POOL_SIZE must be a number"),
             ratel_database: option_env!("RATEL_DATABASE_URL")
                 .expect("You must set RATEL_DATABASE_URL"),
+            sys_database: option_env!("SYS_DATABASE_URL")
+                .expect("You must set SYS_DATABASE_URL"),
             allowed_emails: option_env!("ALLOWED_EMAILS")
                 .unwrap_or("")
                 .split(',')
                 .collect::<HashSet<&str>>(),
+            github_api_base_url: "https://api.github.com",
         }
     }
 }
