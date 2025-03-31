@@ -3,15 +3,17 @@ use bdk::prelude::*;
 #[derive(Debug, Clone, Eq, PartialEq, Default, Translate, ApiModel, Copy)]
 #[cfg_attr(feature = "server", derive(schemars::JsonSchema, aide::OperationIo))]
 pub enum CryptoStance {
+    #[translate(en = "Strongly Against")]
+    StronglyAgainst = 0,
+    #[translate(en = "Against")]
+    Against = 1,
     #[default]
-    #[translate(en = "No Stance")]
-    NoStance = 0,
-    #[translate(en = "Pro-Crypto")]
-    ProCrypto = 1,
     #[translate(en = "Neutral")]
     Neutral = 2,
-    #[translate(en = "Anti-Crypto")]
-    AntiCrypto = 3,
+    #[translate(en = "Supportive")]
+    Supportive = 3,
+    #[translate(en = "Strongly Supportive")]
+    StronglySupportive = 4,
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, Default)]
