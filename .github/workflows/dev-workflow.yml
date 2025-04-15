@@ -198,6 +198,7 @@ jobs:
           AUTH_DOMAIN: dev.biyard.co
           DATABASE_TYPE: postgres
           RATEL_DATABASE_URL: ${{ secrets.DEV_RATEL_DATABASE_URL }}
+          HOMEPAGE_DATABASE_URL: ${{ secrets.DEV_HOMEPAGE_DATABASE_URL }}
           AUTH_SECRET_KEY: ${{ secrets.DEV_AUTH_SECRET_KEY }}
           JWT_SECRET_KEY: ${{ secrets.DEV_JWT_SECRET_KEY }}
           ENABLE_S3: false
