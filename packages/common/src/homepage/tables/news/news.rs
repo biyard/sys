@@ -2,7 +2,7 @@ use bdk::prelude::*;
 use validator::Validate;
 
 #[derive(Validate)]
-#[api_model(base = "/m1/homepage/news", table = news)]
+#[api_model(base = "/m1/homepage/news", table = news, action_by_id = delete)]
 pub struct News {
     #[api_model(summary, primary_key)]
     pub id: i64,

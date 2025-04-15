@@ -1,6 +1,6 @@
 use bdk::prelude::*;
 
-#[api_model(base = "/m1/homepage/members", table = members)]
+#[api_model(base = "/m1/homepage/members", table = members, action_by_id = delete)]
 pub struct Member {
     #[api_model(summary, primary_key)]
     pub id: i64,
@@ -9,21 +9,21 @@ pub struct Member {
     #[api_model(summary, auto = [insert, update])]
     pub updated_at: i64,
 
-    #[api_model(summary, action = create)]
+    #[api_model(summary, action = create, action_by_id = update)]
     pub name: String,
-    #[api_model(summary, action = create)]
+    #[api_model(summary, action = create, action_by_id = update)]
     pub image: String,
-    #[api_model(summary, type = INTEGER, action = create)]
+    #[api_model(summary, type = INTEGER, action = create, action_by_id = update)]
     pub role: MemberRole,
-    #[api_model(summary, unique, action = create)]
+    #[api_model(summary, unique, action = create, action_by_id = update)]
     pub email: String,
-    #[api_model(summary, action = create)]
+    #[api_model(summary, action = create, action_by_id = update)]
     pub web: Option<String>,
-    #[api_model(summary, action = create)]
+    #[api_model(summary, action = create, action_by_id = update)]
     pub linkedin: Option<String>,
-    #[api_model(summary, action = create)]
+    #[api_model(summary, action = create, action_by_id = update)]
     pub github: Option<String>,
-    #[api_model(summary, action = create)]
+    #[api_model(summary, action = create, action_by_id = update)]
     pub description: String,
 }
 
