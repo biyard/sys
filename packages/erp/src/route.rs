@@ -10,6 +10,7 @@ pub enum Route {
 
             #[nest("/homepage")]
                 #[route("/contacts")] ContactsPage { lang: Language },
+                #[route("/contacts/:id")] ContactsByIdPage { lang: Language, id: i64 },
                 #[route("/members")] MembersPage { lang: Language },
                 #[route("/members/new")] MembersNewPage { lang: Language },
                 #[route("/news")] NewsPage { lang: Language },
