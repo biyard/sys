@@ -24,6 +24,9 @@ jobs:
           target: wasm32-unknown-unknown
           toolchain: stable
 
+      - name: Update
+        run: sudo apt-get update
+
       - name: Install dependencies
         run: sudo apt-get install -y libgtk-3-dev
 
@@ -159,7 +162,7 @@ jobs:
           V1_ENDPOINT: api.dev.biyard.co
         run: |
           npm i -g aws-cdk @tailwindcss/cli
-          make deploy-web-if-needed
+          make deploy-web
 
   api:
     runs-on: ubuntu-22.04
@@ -205,7 +208,7 @@ jobs:
           ENABLE_LAMBDA: true
         run: |
           npm i -g aws-cdk
-          make deploy-if-needed
+          make deploy
 
   create-release-pr:
     runs-on: ubuntu-latest
