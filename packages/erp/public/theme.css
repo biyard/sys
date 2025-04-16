@@ -1,0 +1,147 @@
+@theme {
+  /* Tailwindcss variables */
+  --spacing: 1px;
+  --color-shade: black;
+  --color-black: #000203;
+  --color-primary: #00D190;
+  --color-secondary: #777677;
+
+  --color-text-prmary: white;
+
+  /* Text colors */
+  --color-text-primary: white;
+  --color-text-secondary: #a1a1a1; /* neutral-400 */
+
+  /* Popup colors */
+  --color-popup-background: rgba(34, 34, 34, 0.58);
+
+  /* Background colors */
+  --color-background: #1e1e1e;
+
+  /* Checkbox colors */
+  --color-cb-text: #aeaaab;
+
+  /* Border colors */
+  --color-border-primary: #464646;
+
+  /* Primary button colors */
+  --color-btn-p: #fcb300;
+  --color-btn-p-hover: #ca8f00;
+  --color-btn-p-text: black;
+  --color-btn-p-hover-text: black;
+  --color-btn-p-disabled: #777677;
+  --color-btn-p-disabled-text: #aeaeae;
+
+  /* Secondary button colors */
+  --color-btn-s: white;
+  --color-btn-s-hover: #cccccc;
+  --color-btn-s-text: black;
+  --color-btn-s-hover-text: black;
+  --color-btn-s-disabled: #777677;
+  --color-btn-s-disabled-text: #aeaeae;
+
+  /* Outlined button colors */
+  --color-btn-o: #464646; /* border color */
+  --color-btn-o-hover: white; /* border color while hovering */
+  --color-btn-o-hover-bg: #1a1a1a; /* bg color while hovering */
+  --color-btn-o-text: white;
+  --color-btn-o-hover-text: white;
+
+  /* App-specific colors */
+  --color-hover: #ca8f00;
+  --color-c-wg-30: #aeaeae;
+  --color-c-wg-50: #777677;
+  --color-c-wg-70: #464646;
+  --color-c-wg-80: #323232;
+  --color-c-cg-30: #aeb8b8;
+  --color-footer: #191919;
+  --color-copyright: #9095a1;
+  --color-neutral-80: #6b6b6b;
+  --color-neutral-400: #a1a1a1;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-c-c-20: #6eedd8;
+  --color-c-p-20: #ff9eee;
+  --color-c-p-50: #db2780;
+  --color-c-p-50-10: #db27801a;
+  --color-supportive: #6eedd8;
+  --color-against: #ff9eee;
+  --color-bg: #000203;
+  --color-tab-hover: #282828;
+  --color-mission-title: #DEE1E6;
+  --color-menu-shade: #2C283780;
+  --color-purple-blur: #210097;
+  --color-service-card-bg: #2C2C2C;
+
+  --color-gray-300: #D4D4D8;
+  --color-gray-600: #52525B;
+  --color-gray-700: #777677;
+  --color-gray-800: #27272A;
+
+  --breakpoint-desktop:1440px;
+  --breakpoint-tablet:1024px;
+  --breakpoint-mobile:500px;
+  --breakpoint-sm-mobile:380px;
+
+  --container-desktop: 1440px;
+  --container-wrapper: 1280px;
+}
+
+@layer utilities {}
+
+@layer base {
+  section {
+    @apply min-h-screen flex flex-col items-center max-desktop:px-20;
+  }
+
+  button {
+    @apply cursor-pointer px-40 py-15 bg-primary hover:bg-primary/70 text-text-primary font-semibold;
+  }
+
+  a {
+    @apply cursor-pointer;
+  }
+
+  label {
+    @apply text-[15px]/22 tracking-[0.5px] font-medium text-neutral-400;
+  }
+
+  input {
+    @apply w-full h-44 rounded-[4px] border-b-1 border-gray-600 px-20 flex flex-row items-center focus:outline-none focus:border-b-primary;
+  }
+
+  form {
+    @apply w-full flex flex-col items-start justify-start gap-20;
+  }
+
+  textarea {
+    @apply w-full rounded-[4px] border border-gray-600 px-20 flex flex-row items-center focus:outline-none focus:border-primary;
+  }
+
+  div {
+    @apply w-full;
+  }
+
+  .row {
+    @apply flex flex-row items-center justify-start w-full gap-10;
+  }
+
+  .col {
+    @apply flex flex-col items-center justify-start w-full gap-10;
+  }
+
+  img {
+    @apply h-100 rounded-sm object-cover;
+  }
+
+  p {
+    @apply text-lg;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-40 py-15 bg-primary hover:bg-primary/70 text-text-primary font-semibold;
+  }
+}

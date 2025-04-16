@@ -1,4 +1,4 @@
-use crate::components::Pagination;
+use crate::{components::Pagination, route::Route};
 
 use super::*;
 use bdk::prelude::*;
@@ -15,6 +15,9 @@ pub fn NewsPage(lang: Language) -> Element {
 
         div { id: "news", class: "flex flex-col gap-20",
             "{tr.title} PAGE"
+            div { class: "w-full flex flex-row justify-end",
+                Link { class: "btn-primary", to: Route::NewsNewPage { lang }, {tr.btn_new} }
+            }
 
             for news in ctrl.news()?.items {
                 div { class: "flex flex-row gap-10",

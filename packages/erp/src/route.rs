@@ -12,6 +12,7 @@ pub enum Route {
                 #[route("/contacts")] ContactsPage { lang: Language },
                 #[route("/members")] MembersPage { lang: Language },
                 #[route("/news")] NewsPage { lang: Language },
+                #[route("/news/new")] NewsNewPage { lang: Language },
                 #[route("/updates")] UpdatesPage { lang: Language },
             #[end_nest]
 

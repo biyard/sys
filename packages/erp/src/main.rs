@@ -20,7 +20,7 @@ fn main() {
 fn app() -> Element {
     PopupService::init();
 
-    let css = include_str!("../public/input.css");
+    let css = include_str!("../public/theme.css");
     let conf = config::get();
 
     rsx! {

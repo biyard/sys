@@ -51,9 +51,18 @@ impl NewsController {
     async fn create(
         &self,
         _auth: Option<Authorization>,
-        _param: NewsCreateRequest,
+        NewsCreateRequest {
+            category,
+            title,
+            image,
+            contents,
+            link,
+            main,
+        }: NewsCreateRequest,
     ) -> Result<News> {
-        todo!()
+        self.repo
+            .insert(category, title, image, contents, link, main)
+            .await
     }
 
     async fn delete(&self, id: i64, auth: Option<Authorization>) -> Result<News> {

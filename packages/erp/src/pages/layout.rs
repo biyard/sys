@@ -73,7 +73,7 @@ pub fn RootBase(lang: Language, children: Element) -> Element {
                         CubeLoader {}
                     }
                 },
-                div { class: "ml-270 h-full grow overflow-x-hidden scroll-smooth flex flex-col items-center justify-center",
+                div { class: "ml-270 h-full grow overflow-x-hidden scroll-smooth flex flex-col items-center justify-center py-40 px-20",
                     Outlet::<Route> {}
 
                     {children}
