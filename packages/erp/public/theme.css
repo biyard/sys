@@ -144,4 +144,8 @@
   .btn-primary {
     @apply px-40 py-15 bg-primary hover:bg-primary/70 text-text-primary font-semibold;
   }
+
+  .btn-secondary {
+    @apply px-40 py-15 bg-white hover:bg-white/70 text-text-primary font-semibold;
+  }
 }

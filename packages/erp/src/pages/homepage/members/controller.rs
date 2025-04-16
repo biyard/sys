@@ -22,4 +22,18 @@ impl Controller {
 
         Ok(ctrl)
     }
+
+    pub async fn delete(&mut self, id: i64) {
+        match Member::get_client(crate::config::get().main_api_endpoint)
+            .delete(id)
+            .await
+        {
+            Ok(_) => {
+                self.members.restart();
+            }
+            Err(e) => {
+                btracing::error!("Error deleting member: {:?}", e);
+            }
+        }
+    }
 }

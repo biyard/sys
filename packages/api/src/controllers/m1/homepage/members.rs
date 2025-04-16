@@ -51,9 +51,20 @@ impl MemberController {
     async fn create(
         &self,
         _auth: Option<Authorization>,
-        _param: MemberCreateRequest,
+        MemberCreateRequest {
+            name,
+            image,
+            role,
+            email,
+            web,
+            linkedin,
+            github,
+            description,
+        }: MemberCreateRequest,
     ) -> Result<Member> {
-        todo!()
+        self.repo
+            .insert(name, image, role, email, web, linkedin, github, description)
+            .await
     }
 
     async fn update(

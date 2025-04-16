@@ -24,6 +24,7 @@ fn app() -> Element {
     let conf = config::get();
 
     rsx! {
+        btracing::ToastTracing {}
         FirebaseProvider {
             api_key: conf.firebase.api_key.clone(),
             auth_domain: conf.firebase.auth_domain.clone(),
