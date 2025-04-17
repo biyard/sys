@@ -1,3 +1,4 @@
+pub mod components;
 pub mod config;
 pub mod pages;
 pub mod route;
@@ -19,10 +20,11 @@ fn main() {
 fn app() -> Element {
     PopupService::init();
 
-    let css = include_str!("../public/input.css");
+    let css = include_str!("../public/theme.css");
     let conf = config::get();
 
     rsx! {
+        btracing::ToastTracing {}
         FirebaseProvider {
             api_key: conf.firebase.api_key.clone(),
             auth_domain: conf.firebase.auth_domain.clone(),

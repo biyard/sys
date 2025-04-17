@@ -33,5 +33,5 @@ hex = "0.4.3"
 [features]
 default = []
 web = ["bdk/web"]
-server = ["bdk/server"]
+server = ["bdk/server", "common/server"]
 lambda = ["server", "bdk/lambda"]

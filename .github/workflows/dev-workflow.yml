@@ -24,6 +24,9 @@ jobs:
           target: wasm32-unknown-unknown
           toolchain: stable
 
+      - name: Update
+        run: sudo apt-get update
+
       - name: Install dependencies
         run: sudo apt-get install -y libgtk-3-dev
 
@@ -159,7 +162,7 @@ jobs:
           V1_ENDPOINT: api.dev.biyard.co
         run: |
           npm i -g aws-cdk @tailwindcss/cli
-          make deploy-web-if-needed
+          make deploy-web
 
   api:
     runs-on: ubuntu-22.04
@@ -198,13 +201,14 @@ jobs:
           AUTH_DOMAIN: dev.biyard.co
           DATABASE_TYPE: postgres
           RATEL_DATABASE_URL: ${{ secrets.DEV_RATEL_DATABASE_URL }}
+          HOMEPAGE_DATABASE_URL: ${{ secrets.DEV_HOMEPAGE_DATABASE_URL }}
           AUTH_SECRET_KEY: ${{ secrets.DEV_AUTH_SECRET_KEY }}
           JWT_SECRET_KEY: ${{ secrets.DEV_JWT_SECRET_KEY }}
           ENABLE_S3: false
           ENABLE_LAMBDA: true
         run: |
           npm i -g aws-cdk
-          make deploy-if-needed
+          make deploy
 
   create-release-pr:
     runs-on: ubuntu-latest

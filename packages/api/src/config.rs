@@ -11,6 +11,7 @@ pub struct Config {
     pub aws: AwsConfig,
     pub pool_size: u32,
     pub ratel_database: &'static str,
+    pub homepage_database: &'static str,
     pub allowed_emails: HashSet<&'static str>,
 }
 
@@ -27,6 +28,8 @@ impl Default for Config {
                 .expect("POOL_SIZE must be a number"),
             ratel_database: option_env!("RATEL_DATABASE_URL")
                 .expect("You must set RATEL_DATABASE_URL"),
+            homepage_database: option_env!("HOMEPAGE_DATABASE_URL")
+                .expect("You must set HOMEPAGE_DATABASE_URL"),
             allowed_emails: option_env!("ALLOWED_EMAILS")
                 .unwrap_or("")
                 .split(',')

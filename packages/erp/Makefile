@@ -16,6 +16,7 @@ MAIN_API_ENDPOINT ?= https://api.dev.biyard.co
 RATEL_API_ENDPOINT ?= https://api.dev.ratel.foundation
 RUSTFLAGS ?= -D warnings
 DXFLAGS ?=
+CARGO_TARGET_DIR ?= $(PWD)/target
 
 BUILD_ENV ?= ENV=$(ENV) VERSION=$(VERSION) COMMIT=$(COMMIT) RUST_LOG=$(RUST_LOG) ENV=$(ENV) DOMAIN=${DOMAIN} AWS_REGION=${REGION} AWS_ACCESS_KEY_ID=${ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${SECRET_ACCESS_KEY} SERVICE=$(SERVICE) WORKSPACE_ROOT=$(WORKSPACE_ROOT) BASE_URL=$(BASE_URL) MAIN_API_ENDPOINT=$(MAIN_API_ENDPOINT) REDIRECT_URI=$(REDIRECT_URI) RUSTFLAGS="$(RUSTFLAGS)"
 
@@ -26,7 +27,7 @@ setup.tool:
 	npm i -g webpack-cli
 
 run: clean public/tailwind.css public/dep.js
-	@$(BUILD_ENV) dx serve --fullstack $(DXFLAGS)
+	@CARGO_TARGET_DIR=$(CARGO_TARGET_DIR) $(BUILD_ENV) dx serve --fullstack $(DXFLAGS)
 
 build: clean public/tailwind.css public/dep.js
 	@$(BUILD_ENV) dx build --release --fullstack --server-features lambda
@@ -38,7 +39,7 @@ public/dep.js:
 	cd $(WORKSPACE_ROOT)/deps/js && make build && cp ./dist/main.js $(PWD)/public/dep.js
 
 public/tailwind.css:
-	tailwindcss -i ./public/input.css -o ./public/tailwind.css
+	npx tailwindcss -i ./public/input.css -o ./public/tailwind.css
 
 clean:
 	rm -rf public/tailwind.css public/dep.js
