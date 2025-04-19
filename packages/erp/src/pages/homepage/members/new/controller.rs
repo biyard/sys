@@ -35,7 +35,7 @@ impl Controller {
 
         use_effect(move || {
             if let Some(id) = id {
-                async move {
+                spawn(async move {
                     match common::homepage::Member::get_client(
                         crate::config::get().main_api_endpoint,
                     )
@@ -56,7 +56,7 @@ impl Controller {
                             btracing::error!("Error loading member: {:?}", e);
                         }
                     }
-                };
+                });
             }
         });
 
