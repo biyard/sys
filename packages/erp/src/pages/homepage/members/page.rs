@@ -26,8 +26,16 @@ pub fn MembersPage(lang: Language) -> Element {
 
                         h2 { class: "text-2xl font-bold row justify-between w-full",
                             {m.name}
+                            Link {
+                                class: "btn-primary",
+                                to: Route::MembersEditPage {
+                                    lang,
+                                    id: m.id,
+                                },
+                                "Edit"
+                            }
                             button {
-                                class: "text-red btn-secondary text-sm py-10 px-15",
+                                class: "btn-secondary",
                                 onclick: move |_| async move {
                                     ctrl.delete(m.id).await;
                                 },

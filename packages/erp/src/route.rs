@@ -13,6 +13,7 @@ pub enum Route {
                 #[route("/contacts/:id")] ContactsByIdPage { lang: Language, id: i64 },
                 #[route("/members")] MembersPage { lang: Language },
                 #[route("/members/new")] MembersNewPage { lang: Language },
+                #[route("/members/edit/:id")] MembersEditPage { lang: Language, id: i64 },
                 #[route("/news")] NewsPage { lang: Language },
                 #[route("/news/new")] NewsNewPage { lang: Language },
                 #[route("/updates")] UpdatesPage { lang: Language },

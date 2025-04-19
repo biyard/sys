@@ -8,7 +8,7 @@ use i18n::*;
 
 #[component]
 pub fn MembersNewPage(lang: Language, id: Option<i64>) -> Element {
-    let mut ctrl = Controller::new(lang)?;
+    let mut ctrl = Controller::new(lang, id)?;
     let tr: MembersNewTranslate = translate(&lang);
 
     rsx! {

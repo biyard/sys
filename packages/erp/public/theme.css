@@ -146,6 +146,6 @@
   }
 
   .btn-secondary {
-    @apply px-40 py-15 bg-white hover:bg-white/70 text-text-primary font-semibold;
+    @apply px-40 py-15 bg-white hover:bg-white/70 text-primary font-semibold;
   }
 }
