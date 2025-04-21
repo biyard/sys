@@ -8,7 +8,7 @@ use i18n::*;
 
 #[component]
 pub fn MembersNewPage(lang: Language, id: Option<i64>) -> Element {
-    let mut ctrl = Controller::new(lang)?;
+    let mut ctrl = Controller::new(lang, id)?;
     let tr: MembersNewTranslate = translate(&lang);
 
     rsx! {
@@ -19,12 +19,14 @@ pub fn MembersNewPage(lang: Language, id: Option<i64>) -> Element {
             div { class: "col items-start",
                 input {
                     r#type: "text",
+                    value: ctrl.name(),
                     placeholder: "Name",
                     name: "name",
                     oninput: move |evt| ctrl.name.set(evt.value()),
                 }
                 input {
                     r#type: "text",
+                    value: ctrl.image(),
                     placeholder: "Image",
                     name: "image",
                     oninput: move |evt| ctrl.image.set(evt.value()),
@@ -39,18 +41,21 @@ pub fn MembersNewPage(lang: Language, id: Option<i64>) -> Element {
                 }
                 input {
                     r#type: "text",
+                    value: ctrl.email(),
                     placeholder: "Email",
                     name: "email",
                     oninput: move |evt| ctrl.email.set(evt.value()),
                 }
                 input {
                     r#type: "text",
+                    value: ctrl.web(),
                     placeholder: "Web",
                     name: "web",
                     oninput: move |evt| ctrl.web.set(evt.value()),
                 }
                 input {
                     r#type: "text",
+                    value: ctrl.linkedin(),
                     placeholder: "LinkedIn",
                     name: "linkedin",
                     oninput: move |evt| ctrl.linkedin.set(evt.value()),
@@ -58,12 +63,15 @@ pub fn MembersNewPage(lang: Language, id: Option<i64>) -> Element {
                 input {
                     r#type: "text",
                     placeholder: "GitHub",
+                    value: ctrl.github(),
                     name: "github",
                     oninput: move |evt| ctrl.github.set(evt.value()),
                 }
                 textarea {
                     rows: 10,
                     placeholder: "Description",
+                    value: ctrl.description(),
+                    maxlength: 350,
                     name: "description",
                     oninput: move |evt| ctrl.description.set(evt.value()),
                 }

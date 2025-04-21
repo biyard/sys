@@ -8,7 +8,7 @@ pub fn Dropdown(
     #[props(default = 0)] selected: usize,
     onselect: EventHandler<usize>,
 ) -> Element {
-    let mut selected_item = use_signal(|| 0);
+    tracing::debug!("Dropdown: {:?}", selected);
     let mut opened = use_signal(|| false);
 
     rsx! {
@@ -21,7 +21,7 @@ pub fn Dropdown(
                     id: "menu-button",
                     r#type: "button",
                     onclick: move |_| opened.set(!opened()),
-                    span { class: "text-left", {items[selected_item()].clone()} }
+                    span { class: "text-left", {items[selected].clone()} }
                     ShapeArrowDown {
                         class: "[&>path]:stroke-gray-700 [&>path]:fill-gray-700 transition-all group-aria-expanded:rotate-180",
                         size: 20,
@@ -40,10 +40,9 @@ pub fn Dropdown(
                         div {
                             id: "menu-item-{item}",
                             class: "group text-sm text-gray-700 text-c-wg-50 font-semibold py-15 px-20 flex flex-row w-full justify-between hover:text-white items-center cursor-pointer aria-selected:text-white",
-                            "aria-selected": i == selected_item(),
+                            "aria-selected": i == selected,
                             onclick: move |_| {
                                 opened.set(false);
-                                selected_item.set(i);
                                 onselect(i);
                             },
                             role: "menuitem",

@@ -22,16 +22,26 @@ pub fn MembersPage(lang: Language) -> Element {
             for m in ctrl.members()? {
                 div { class: "row group",
                     img { class: "h-300", src: m.image }
-                    div { class: "col items-start",
+                    div { class: "col items-start w-full",
 
                         h2 { class: "text-2xl font-bold row justify-between w-full",
                             {m.name}
-                            button {
-                                class: "text-red btn-secondary text-sm py-10 px-15",
-                                onclick: move |_| async move {
-                                    ctrl.delete(m.id).await;
-                                },
-                                "Delete"
+                            div { class: "row justify-end gap-20",
+                                Link {
+                                    class: "btn-primary py-10 px-20",
+                                    to: Route::MembersEditPage {
+                                        lang,
+                                        id: m.id,
+                                    },
+                                    "Edit"
+                                }
+                                button {
+                                    class: "btn-secondary py-10 px-20",
+                                    onclick: move |_| async move {
+                                        ctrl.delete(m.id).await;
+                                    },
+                                    "Delete"
+                                }
                             }
 
                         }

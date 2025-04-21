@@ -18,8 +18,8 @@ pub struct Controller {
 }
 
 impl Controller {
-    pub fn new(lang: Language) -> std::result::Result<Self, RenderError> {
-        let ctrl = Self {
+    pub fn new(lang: Language, id: Option<i64>) -> std::result::Result<Self, RenderError> {
+        let mut ctrl = Self {
             lang,
             name: use_signal(|| String::new()),
             image: use_signal(|| String::new()),
@@ -32,6 +32,39 @@ impl Controller {
             selected_role: use_signal(|| 0),
             nav: use_navigator(),
         };
+
+        use_effect(move || {
+            if let Some(id) = id {
+                spawn(async move {
+                    match common::homepage::Member::get_client(
+                        crate::config::get().main_api_endpoint,
+                    )
+                    .get(id)
+                    .await
+                    {
+                        Ok(member) => {
+                            ctrl.name.set(member.name);
+                            ctrl.image.set(member.image);
+                            ctrl.role.set(member.role);
+                            ctrl.email.set(member.email);
+                            ctrl.web.set(member.web.unwrap_or_default());
+                            ctrl.linkedin.set(member.linkedin.unwrap_or_default());
+                            ctrl.github.set(member.github.unwrap_or_default());
+                            ctrl.description.set(member.description);
+                            ctrl.selected_role.set(
+                                MemberRole::VARIANTS
+                                    .iter()
+                                    .position(|r| *r == member.role)
+                                    .unwrap_or(0),
+                            );
+                        }
+                        Err(e) => {
+                            btracing::error!("Error loading member: {:?}", e);
+                        }
+                    }
+                });
+            }
+        });
 
         Ok(ctrl)
     }
