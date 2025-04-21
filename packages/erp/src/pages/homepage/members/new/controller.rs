@@ -51,6 +51,12 @@ impl Controller {
                             ctrl.linkedin.set(member.linkedin.unwrap_or_default());
                             ctrl.github.set(member.github.unwrap_or_default());
                             ctrl.description.set(member.description);
+                            ctrl.selected_role.set(
+                                MemberRole::VARIANTS
+                                    .iter()
+                                    .position(|r| *r == member.role)
+                                    .unwrap_or(0),
+                            );
                         }
                         Err(e) => {
                             btracing::error!("Error loading member: {:?}", e);
