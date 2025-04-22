@@ -33,6 +33,32 @@ pub enum Error {
         en = "Please check if all input data is correct."
     )]
     ValidationError(String),
+
+    // Ratel
+    // PresidentialCandidate
+    #[translate(
+        ko = "대선후보 등록에 실패했습니다. 관리자에게 문의해주세요.",
+        en = "Failed to register presidential candidate. Please contact the administrator."
+    )]
+    PresidentialCandidateCreateError,
+
+    #[translate(
+        ko = "대선후보 수정에 실패했습니다",
+        en = "Failed to update presidential candidate."
+    )]
+    PresidentialCandidateUpdateError,
+
+    // ElectionPledge
+    #[translate(
+        ko = "공약 등록에 실패했습니다. 관리자에게 문의해주세요.",
+        en = "Failed to register election pledge. Please contact the administrator."
+    )]
+    ElectionPledgeCreateError,
+    #[translate(
+        ko = "공약 수정에 실패했습니다. 관리자에게 문의해주세요.",
+        en = "Failed to update election pledge. Please contact the administrator."
+    )]
+    ElectionPledgeUpdateError,
 }
 
 impl From<reqwest::Error> for Error {

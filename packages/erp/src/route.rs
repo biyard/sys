@@ -6,7 +6,12 @@ use bdk::prelude::*;
 pub enum Route {
     #[nest("/:lang")]
         #[layout(RootLayout)]
-            #[route("/ratel/politicians")] PoliticiansPage { lang: Language },
+            #[nest("/ratel")]
+                #[route("/politicians")] PoliticiansPage { lang: Language },
+                #[route("/presidential-candidates")] PresidentialCandidatesPage { lang: Language },
+                #[route("/presidential-candidates/new")] PresidentialCandidatesNewPage { lang: Language },
+                #[route("/presidential-candidates/edit/:id")] PresidentialCandidatesEditByIdPage { lang: Language, id: i64 },
+            #[end_nest]
 
             #[nest("/homepage")]
                 #[route("/contacts")] ContactsPage { lang: Language },

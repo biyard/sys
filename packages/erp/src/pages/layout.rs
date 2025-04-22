@@ -63,6 +63,13 @@ pub fn RootBase(lang: Language, children: Element) -> Element {
                         class: "text-white pl-20 hover:text-primary text-base font-semibold",
                         span { "Politicians" }
                     }
+                    Link {
+                        to: Route::PresidentialCandidatesPage {
+                            lang,
+                        },
+                        class: "text-white pl-20 hover:text-primary text-base font-semibold",
+                        span { "Presidential Candidates" }
+                    }
 
                 }
             }
