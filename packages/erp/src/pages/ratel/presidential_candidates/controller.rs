@@ -21,4 +21,12 @@ impl Controller {
 
         Ok(ctrl)
     }
+
+    pub async fn handle_delete(&mut self, id: i64) {
+        PresidentialCandidate::get_client(crate::config::get().main_api_endpoint)
+            .delete(id)
+            .await
+            .unwrap_or_default();
+        self.candidates.restart();
+    }
 }

@@ -25,12 +25,22 @@ pub fn PresidentialCandidatesNewPage(id: Option<i64>, lang: Language) -> Element
                     name: "name",
                     oninput: move |evt| ctrl.name.set(evt.value()),
                 }
+                input {
+                    r#type: "text",
+                    value: ctrl.image(),
+                    placeholder: "Image URL",
+                    name: "image",
+                    oninput: move |evt| ctrl.image.set(evt.value()),
+                }
+                if !ctrl.image().is_empty() {
+                    img { class: "w-100 h-100", src: ctrl.image() }
+                }
                 label {
                     "Crypto Stance"
                     Dropdown {
                         items: CryptoStance::variants(&lang),
                         selected: ctrl.selected_crypto_stance(),
-                        onselect: move |stance| ctrl.set_crypto_stance(stance),
+                        onselect: move |stance| ctrl.selected_crypto_stance.set(stance),
                     }
                 }
                 label {
@@ -38,7 +48,10 @@ pub fn PresidentialCandidatesNewPage(id: Option<i64>, lang: Language) -> Element
                     Dropdown {
                         items: Party::variants(&lang),
                         selected: ctrl.selected_party(),
-                        onselect: move |party| ctrl.set_party(party),
+                        onselect: move |party| {
+                            tracing::debug!("Selected party: {party}");
+                            ctrl.selected_party.set(party);
+                        },
                     }
                 }
 

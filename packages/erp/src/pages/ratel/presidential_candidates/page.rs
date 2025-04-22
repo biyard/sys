@@ -7,7 +7,7 @@ use i18n::*;
 
 #[component]
 pub fn PresidentialCandidatesPage(lang: Language) -> Element {
-    let ctrl = Controller::new(lang)?;
+    let mut ctrl = Controller::new(lang)?;
     let tr: PresidentialCandidatesTranslate = translate(&lang);
 
     rsx! {
@@ -32,19 +32,31 @@ pub fn PresidentialCandidatesPage(lang: Language) -> Element {
                 div { class: "col gap-20",
                     div { class: "row justify-between",
                         h2 { class: "text-2xl", {c.name} }
-                        Link {
-                            class: "btn-primary",
-                            to: Route::PresidentialCandidatesEditByIdPage {
-                                lang,
-                                id: c.id,
+                        button {
+                            class: "btn-secondary",
+                            onclick: move |_| async move {
+                                ctrl.handle_delete(c.id).await;
                             },
-                            "Edit"
+                            "Delete"
                         }
+                                        // Link {
+                    //     class: "btn-primary",
+                    //     to: Route::PresidentialCandidatesEditByIdPage {
+                    //         lang,
+                    //         id: c.id,
+                    //     },
+                    //     "Edit"
+                    // }
                     }
-                    p { class: "text-sm", {c.party.translate(&lang)} }
-                    p { class: "text-sm", {c.crypto_stance.translate(&lang)} }
-                    for p in c.election_pledges {
-                        article { dangerous_inner_html: p.promise }
+                    div { class: "row gap-20",
+                        img { class: "w-300 h-500", src: c.image }
+                        div { class: "col gap-20",
+                            p { class: "text-sm", {c.party.translate(&lang)} }
+                            p { class: "text-sm", {c.crypto_stance.translate(&lang)} }
+                            for p in c.election_pledges {
+                                article { dangerous_inner_html: p.promise }
+                            }
+                        }
                     }
                 }
             }

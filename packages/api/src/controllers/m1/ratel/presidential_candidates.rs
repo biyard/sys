@@ -34,7 +34,6 @@ impl PresidentialCandidateController {
         let mut total_count = 0;
         let items: Vec<PresidentialCandidateSummary> =
             PresidentialCandidateSummary::query_builder()
-                .election_pledges_builder(ElectionPledge::query_builder())
                 .limit(param.size())
                 .page(param.page())
                 .query()
@@ -58,21 +57,23 @@ impl PresidentialCandidateController {
             crypto_stance,
             party,
             election_pledges,
+            image,
         }: PresidentialCandidateCreateRequest,
     ) -> Result<PresidentialCandidate> {
         let mut tx = self.pool.begin().await?;
 
         let mut doc = self
             .repo
-            .insert_with_tx(&mut *tx, name, crypto_stance, party)
+            .insert_with_tx(&mut *tx, name, image, crypto_stance, party)
             .await?
             .ok_or(Error::PresidentialCandidateCreateError)?;
 
         let repo = ElectionPledge::get_repository(self.pool.clone());
 
         for promise in election_pledges {
+            tracing::debug!("create election pledge {:?}", promise);
             let promise = repo
-                .insert_with_tx(&mut *tx, promise)
+                .insert_with_tx(&mut *tx, doc.id, promise)
                 .await?
                 .ok_or(Error::ElectionPledgeCreateError)?;
             doc.election_pledges.push(promise);
@@ -91,6 +92,7 @@ impl PresidentialCandidateController {
             crypto_stance,
             party,
             election_pledges,
+            image,
         }: PresidentialCandidateUpdateRequest,
     ) -> Result<PresidentialCandidate> {
         let mut tx = self.pool.begin().await?;
@@ -101,6 +103,7 @@ impl PresidentialCandidateController {
                 id,
                 PresidentialCandidateRepositoryUpdateRequest::new()
                     .with_name(name)
+                    .with_image(image)
                     .with_crypto_stance(crypto_stance)
                     .with_party(party),
             )
@@ -178,6 +181,7 @@ impl PresidentialCandidateController {
         tracing::debug!("act_presidential_candidate {:?}", body);
         match body {
             PresidentialCandidateAction::Create(param) => {
+                tracing::debug!("create {:?}", param);
                 let res = ctrl.create(auth, param).await?;
                 Ok(Json(res))
             }
@@ -213,7 +217,6 @@ impl PresidentialCandidateController {
         Ok(Json(
             PresidentialCandidate::query_builder()
                 .id_equals(id)
-                .election_pledges_builder(ElectionPledge::query_builder())
                 .query()
                 .map(PresidentialCandidate::from)
                 .fetch_one(&ctrl.pool)
