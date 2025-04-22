@@ -4,7 +4,7 @@ use validator::Validate;
 use crate::ratel::*;
 
 #[derive(Validate)]
-#[api_model(base = "/v1/presidential-candidates", table = presidential_candidates, action = [create(election_pledges = Vec<String>)], action_by_id = [delete, update(election_pledges = Vec<ElectionPledgeUpdateRequest>)])]
+#[api_model(base = "/m1/ratel/presidential-candidates", table = presidential_candidates, action = [create(election_pledges = Vec<String>)], action_by_id = [delete, update(election_pledges = Vec<ElectionPledgeUpdateRequest>)])]
 pub struct PresidentialCandidate {
     #[api_model(summary, primary_key)]
     pub id: i64,

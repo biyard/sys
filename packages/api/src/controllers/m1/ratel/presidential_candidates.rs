@@ -34,6 +34,7 @@ impl PresidentialCandidateController {
         let mut total_count = 0;
         let items: Vec<PresidentialCandidateSummary> =
             PresidentialCandidateSummary::query_builder()
+                .election_pledges_builder(ElectionPledge::query_builder())
                 .limit(param.size())
                 .page(param.page())
                 .query()
@@ -156,7 +157,11 @@ impl PresidentialCandidateController {
 
     pub fn route(&self) -> Result<by_axum::axum::Router> {
         Ok(by_axum::axum::Router::new()
-            .route("/:id", post(Self::act_presidential_candidate_by_id))
+            .route(
+                "/:id",
+                post(Self::act_presidential_candidate_by_id)
+                    .get(Self::get_presidential_candidate_by_id),
+            )
             .with_state(self.clone())
             .route(
                 "/",
@@ -198,22 +203,23 @@ impl PresidentialCandidateController {
         }
     }
 
-    // pub async fn get_presidential_candidate_by_id(
-    //     State(ctrl): State<PresidentialCandidateController>,
-    //     Extension(_auth): Extension<Option<Authorization>>,
-    //     Path(PresidentialCandidatePath { id }): Path<PresidentialCandidatePath>,
-    // ) -> Result<Json<PresidentialCandidate>> {
-    //     tracing::debug!("get_presidential_candidate {:?}", id);
+    pub async fn get_presidential_candidate_by_id(
+        State(ctrl): State<PresidentialCandidateController>,
+        Extension(_auth): Extension<Option<Authorization>>,
+        Path(PresidentialCandidatePath { id }): Path<PresidentialCandidatePath>,
+    ) -> Result<Json<PresidentialCandidate>> {
+        tracing::debug!("get_presidential_candidate {:?}", id);
 
-    //     Ok(Json(
-    //         PresidentialCandidate::query_builder()
-    //             .id_equals(id)
-    //             .query()
-    //             .map(PresidentialCandidate::from)
-    //             .fetch_one(&ctrl.pool)
-    //             .await?,
-    //     ))
-    // }
+        Ok(Json(
+            PresidentialCandidate::query_builder()
+                .id_equals(id)
+                .election_pledges_builder(ElectionPledge::query_builder())
+                .query()
+                .map(PresidentialCandidate::from)
+                .fetch_one(&ctrl.pool)
+                .await?,
+        ))
+    }
 
     pub async fn get_presidential_candidate(
         State(ctrl): State<PresidentialCandidateController>,
