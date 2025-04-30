@@ -1,4 +1,5 @@
 mod politicians;
+mod presidential_candidates;
 
 use bdk::prelude::*;
 
@@ -15,8 +16,13 @@ pub async fn route() -> Result<by_axum::axum::Router> {
         .connect(conf.ratel_database)
         .await?;
 
-    Ok(by_axum::axum::Router::new().nest(
-        "/politicians",
-        politicians::PoliticianController::new(pool).route()?,
-    ))
+    Ok(by_axum::axum::Router::new()
+        .nest(
+            "/presidential-candidates",
+            presidential_candidates::PresidentialCandidateController::new(pool.clone()).route()?,
+        )
+        .nest(
+            "/politicians",
+            politicians::PoliticianController::new(pool).route()?,
+        ))
 }
