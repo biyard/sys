@@ -67,6 +67,12 @@ impl From<reqwest::Error> for Error {
     }
 }
 
+impl From<gloo_net::Error> for Error {
+    fn from(e: gloo_net::Error) -> Self {
+        Self::Reqwest(e.to_string())
+    }
+}
+
 impl From<ValidationErrors> for Error {
     fn from(e: ValidationErrors) -> Self {
         Self::ValidationError(e.to_string())

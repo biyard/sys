@@ -21,9 +21,11 @@ num-format = "0.4.4"
 validator = { version = "0.20.0", features = ["derive"] }
 lazy_static = "1.5.0"
 regex = "1.11.1"
+gloo-net = "0.6.0"
+
 
 bdk.workspace = true
-sqlx = { workspace = true,  optional = true }
+sqlx = { workspace = true, optional = true }
 
 [features]
 web = ["bdk/web"]
