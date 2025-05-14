@@ -1,5 +1,6 @@
 mod politicians;
 mod presidential_candidates;
+pub mod subscription;
 
 use bdk::prelude::*;
 
@@ -23,6 +24,10 @@ pub async fn route() -> Result<by_axum::axum::Router> {
         )
         .nest(
             "/politicians",
-            politicians::PoliticianController::new(pool).route()?,
-        ))
+            politicians::PoliticianController::new(pool.clone()).route()?,
+        )
+        .nest(
+            "/subscriptions",
+            subscription::SubscriptionController::new(pool).route()?)
+    )
 }

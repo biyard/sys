@@ -1,5 +1,5 @@
 pub mod dto;
-mod error;
+pub mod error;
 pub mod homepage;
 pub mod ratel;
 

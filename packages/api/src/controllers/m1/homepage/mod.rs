@@ -29,5 +29,6 @@ pub async fn route() -> Result<by_axum::axum::Router> {
             "/updates",
             updates::UpdateController::new(pool.clone()).route()?,
         )
-        .nest("/news", news::NewsController::new(pool).route()?))
+        .nest("/news", news::NewsController::new(pool).route()?)
+        )
 }
