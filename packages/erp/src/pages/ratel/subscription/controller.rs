@@ -1,11 +1,12 @@
-use bdk::prelude::{by_types::QueryResponse, *};
-use common::homepage::*;
+use bdk::prelude::{by_types::QueryResponse, use_resource, use_signal, DioxusController, Language, RenderError, Resource, Signal};
+use common::ratel::{ERPSubscribe, ERPSubscribeQuery, ERPSubscribeSummary};
 
 #[derive(Clone, Copy, DioxusController)]
 pub struct Controller {
     #[allow(dead_code)]
     pub lang: Language,
-    pub subscriptions: Resource<Vec<SubscriptionSummary>>,
+    // pub subscriptions: Resource<Vec<ERPSubscribeSummary>>,
+    pub subscriptions: Resource<QueryResponse<ERPSubscribeSummary>>,
     pub page: Signal<usize>,
     pub page_size: usize,
 }
@@ -19,8 +20,8 @@ impl Controller {
             let page = page();
 
             async move {
-                Subscription::get_client(crate::config::get().main_api_endpoint)
-                    .query(SubscriptionQuery::new(page_size).with_page(page))
+                ERPSubscribe::get_client(crate::config::get().main_api_endpoint)
+                    .query(ERPSubscribeQuery::new(page_size).with_page(page))
                     .await
                     .unwrap_or_default()
             }

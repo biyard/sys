@@ -1,4 +1,4 @@
-use crate::{components::Pagination, route::Route};
+use crate::components::Pagination;
 
 use super::*;
 use bdk::prelude::*;
@@ -46,7 +46,7 @@ pub fn SubscriptionPage(lang: Language) -> Element {
                                 }
                                 td {
                                     class: "px-4 py-2 border-b border-gray-700",
-                                    "{sub.created_at}"
+                                    // "{sub}"
                                 }
                             }
                         }

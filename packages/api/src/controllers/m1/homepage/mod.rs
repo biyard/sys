@@ -1,7 +1,6 @@
 mod contacts;
 mod members;
 mod news;
-mod subscription;
 mod updates;
 
 use bdk::prelude::{sqlx::postgres::PgPoolOptions, *};
@@ -30,9 +29,6 @@ pub async fn route() -> Result<by_axum::axum::Router> {
             "/updates",
             updates::UpdateController::new(pool.clone()).route()?,
         )
-        .nest("/news", news::NewsController::new(pool.clone()).route()?)
-        .nest(
-            "/subscriptions",
-            subscription::SubscriptionController::new(pool).route()?)
+        .nest("/news", news::NewsController::new(pool).route()?)
         )
 }
