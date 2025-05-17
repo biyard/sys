@@ -1,5 +1,7 @@
 use bdk::prelude::*;
+use validator::Validate;
 
+#[derive(Validate)]
 #[api_model(base = "/m1/homepage/newsletters", table = newsletter_subscribers, action_by_id = delete)]
 pub struct Newsletter {
     #[api_model(summary, primary_key)]
