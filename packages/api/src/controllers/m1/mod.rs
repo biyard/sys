@@ -20,7 +20,8 @@ pub async fn route() -> Result<by_axum::axum::Router> {
     Ok(by_axum::axum::Router::new()
         .nest("/ratel", ratel::route().await?)
         .nest("/homepage", homepage::route().await?)
-        .layer(middleware::from_fn(authorize_organization)))
+        .layer(middleware::from_fn(authorize_organization))
+        )
 }
 
 pub async fn authorize_organization(
