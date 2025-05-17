@@ -14,7 +14,7 @@ pub struct Newsletter {
     pub updated_at: i64,
 
     #[validate(email)]
-    #[api_model(summary, unique, action = [create, subscribe], action_by_id = update)]
+    #[api_model(summary, action = [create, subscribe], unique)]
     pub email: String,
 
     #[api_model(summary, action = create, action_by_id = update)]
